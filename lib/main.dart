@@ -177,9 +177,10 @@ class _IblGpuRenderer {
     pass.bindPipeline(_pipeline!);
     pass.bindVertexBuffer(gpu.BufferView(_vertexBuffer!, offsetInBytes: 0, lengthInBytes: 6 * 4 * 4));
     pass.bindUniform(uniformSlot, hostBuffer.emplace(uniform));
-    final sampler = gpu.SamplerOptions(mipFilter: gpu.MipFilter.linear);
-    pass.bindTexture(fragment.getUniformSlot('radiance_cube'), lodColorProbe ? _probeCube! : _cube!, sampler: sampler);
-    pass.bindTexture(fragment.getUniformSlot('radiance_atlas'), lodColorProbe ? _probeAtlas! : _atlas!, sampler: sampler);
+    final cubeSampler = gpu.SamplerOptions(mipFilter: gpu.MipFilter.linear, allowManualMipSampling: true);
+    final atlasSampler = gpu.SamplerOptions(mipFilter: gpu.MipFilter.linear);
+    pass.bindTexture(fragment.getUniformSlot('radiance_cube'), lodColorProbe ? _probeCube! : _cube!, sampler: cubeSampler);
+    pass.bindTexture(fragment.getUniformSlot('radiance_atlas'), lodColorProbe ? _probeAtlas! : _atlas!, sampler: atlasSampler);
     pass.setViewport(gpu.Viewport(x: 0, y: 0, width: _outputSize, height: _outputSize));
     pass.draw(6);
     pass.clearBindings();
