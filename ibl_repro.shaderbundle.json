@@ -1,0 +1,10 @@
+{
+  "ReproVertex": {
+    "type": "vertex",
+    "file": "shaders/ibl_repro.vert"
+  },
+  "ReproFragment": {
+    "type": "fragment",
+    "file": "shaders/ibl_repro.frag"
+  }
+}
